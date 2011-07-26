@@ -1,0 +1,37 @@
+{% extends "skeleton/_root.html" %}
+
+{% block all %}
+
+{%spaceless%}
+
+{%ifnotequal node page.node %}
+	{% if node.has_listing %}<a href="{{node.listing_url}}">{% endif %}
+	<h2>{{node.name|unslugify}}</h2>
+	{% if node.has_listing %}</a>{% endif %}
+{%endifnotequal%}
+
+<ul class="reset subpages">
+{% for list_page in node.pages %}
+	{% ifnotequal list_page node.listing_page %}
+		{% if list_page.display_in_list %}
+		<li>
+			<ul class="reset postdate">
+				<li class="month">{{list_page.created|date:"M" }}</li>
+				<li class="day">{{list_page.created|date:"d" }}</li>
+				<li class="year">{{list_page.created|date:"Y" }}</li>
+			</ul>
+			<a href="{{list_page.url}}">
+			{% with list_page.name_without_extension|remove_date_prefix|unslugify as default_title %}
+				<h3>{{list_page.title|default_if_none:default_title }}</h3>
+			{%endwith%}</a>
+
+			{% render_excerpt list_page %}
+		</li>
+		{%endif%}
+	{% endifnotequal %}
+{% endfor %}
+</ul>
+
+{%endspaceless%}
+
+{% endblock %}

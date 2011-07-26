@@ -1,0 +1,24 @@
+{% extends "skeleton/_body.html" %}
+
+{% block content_body %}
+
+<img src="{{ page.product.thumbnail }}" alt="{{ page.title }}" />
+
+<p>{{ page.product }}</p>
+
+{% filter typogrify %}
+{% markdown %}
+
+{% block article %}
+{% endblock %}
+	
+{% endmarkdown %}
+
+{% endfilter %}
+
+
+{% endblock %}
+
+{% block context_nav %}
+{% include "skeleton/_context_nav.html" %}
+{% endblock %}

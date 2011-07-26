@@ -1,0 +1,15 @@
+<header>
+{% block context_nav %}
+{% endblock %}
+
+{% block sitenav %}
+{% include "skeleton/_site_nav.html" %}
+{% endblock %}
+
+<a class="logo" href="{{ site.url }}">&nbsp;</a>
+<span class="site-tag">Embracing Distractions of the Digital Age</span>
+
+{% block breadcrumbs %}
+{% include "skeleton/_breadcrumbs.html"%}
+{% endblock %}
+</header>

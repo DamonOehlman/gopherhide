@@ -1,0 +1,31 @@
+application: your-app
+version: 1
+runtime: go
+api_version: 2
+
+handlers:
+- url: /(favicon.*)
+  static_files: deploy/media/\1
+  upload: deploy\/media\/(.*)
+
+- url: /(.*\.(js|css|gif|png|jpg|xml|json|txt|ico|woff|ttf|svg|pdf))
+  static_files: deploy/\1
+  upload: deploy\/(.*\.(js|css|gif|png|jpg|xml|json|txt|ico|woff|ttf|svg|pdf))
+  
+- url: /.*
+  script: _go_app
+  
+skip_files:
+- ^(.*/)?app\.yaml
+- ^(.*/)?app\.yml
+- ^(.*/)?index\.yaml
+- ^(.*/)?index\.yml
+- ^(.*/)?#.*#
+- ^(.*/)?.*~
+- ^(.*/)?.*\.py[co]
+- ^(.*/)?.*/RCS/.*
+- ^(.*/)?\..*
+- ^(.*/)?.*\.bak$
+- ^layout.*$
+- ^media.*$
+- ^deploy_tmp.*$

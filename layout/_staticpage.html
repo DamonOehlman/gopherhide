@@ -1,0 +1,22 @@
+{% extends "skeleton/_body.html" %}
+
+{% block content_body %}
+
+<div id="post-content">
+	{% filter typogrify %}
+
+	{% markdown %}
+
+	{% block article %}
+	{% endblock %}
+		
+	{% endmarkdown %}
+
+	{% endfilter %}
+</div>
+
+{% endblock %}
+
+{% block context_nav %}
+{% include "skeleton/_context_nav.html" %}
+{% endblock %}

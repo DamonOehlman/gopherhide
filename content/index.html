@@ -1,0 +1,33 @@
+{% extends "skeleton/_body.html" %}
+
+{%hyde
+title: "Gopherhide Welcome Page"
+%}
+
+{% block content_body %}
+
+{% markdown %}
+
+## Recent Posts
+
+{% endmarkdown %}
+
+{%recent_posts recents 5 %}
+
+<ul class="reset subpages">
+{%for post in recents %}
+	<li>
+		<ul class="reset postdate">
+			<li class="month">{{post.created|date:"M" }}</li>
+			<li class="day">{{post.created|date:"d" }}</li>
+			<li class="year">{{post.created|date:"Y" }}</li>
+		</ul>
+		<a href="{{ post.url }}"><h3>{{ post.title }}</h3></a>
+
+		{% render_excerpt post %}
+	</li>
+{% endfor %}
+</ul>
+
+
+{%endblock%}

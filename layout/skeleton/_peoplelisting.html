@@ -1,0 +1,40 @@
+{% extends "skeleton/_root.html" %}
+
+{% block all %}
+
+{%spaceless%}
+
+
+{% regroup node.pages|dictsort:"group" by group as child_pages %}
+
+<ul class="reset profiles">
+{% for group in child_pages %}
+	{% for list_page in group.list %}
+		{% ifnotequal list_page node.listing_page %}
+			{% if list_page.display_in_list %}	
+		    <li>
+				<a href="{{list_page.url}}">
+				{% with list_page.name_without_extension|remove_date_prefix|unslugify as default_title %}
+					<img 	
+						class="profile" 
+						src="http://www.gravatar.com/avatar/{{ list_page.profile.gravatar }}.png?s=96" 
+						alt="{{list_page.title|default_if_none:default_title }}" />
+					<h4>{{list_page.title|default_if_none:default_title }}</h4>
+				{%endwith%}</a>
+		
+				{% if list_page.profile.position %}
+					<span class="profile-position">{{ list_page.profile.position }}</span>
+				{% endif %}
+
+				{% if list_page.excerpt %}
+					<p class="excerpt">{{ list_page.excerpt }}</p>
+				{%endif%}			
+		    </li>
+			{% endif %}
+		{% endifnotequal %}
+	{% endfor %}
+{% endfor %}
+
+{%endspaceless%}
+
+{% endblock %}

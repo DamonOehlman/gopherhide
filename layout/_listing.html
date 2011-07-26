@@ -1,0 +1,22 @@
+{% extends "skeleton/_body.html" %}
+
+{% block content_body %}
+
+<div id="post-content">
+	{% filter typogrify %}
+	{% markdown %}
+
+	{% block text %}
+	{% endblock %}
+		
+	{% endmarkdown %}
+	{% endfilter %}
+	
+	{% include "skeleton/_customlisting.html" %}
+</div>
+
+{% endblock %}
+
+{% block context_nav %}
+{% include "skeleton/_context_nav.html" %}
+{% endblock %}
