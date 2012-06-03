@@ -1,9 +1,9 @@
 package app
 
 import (
-    "os"
     "fmt"
-    "http"
+    "net/http"
+    "net/url"
     "io/ioutil"
     "regexp"
     "path/filepath"
@@ -27,7 +27,7 @@ func feedHandler(w http.ResponseWriter, r *http.Request) {
 } // feedHandler
 
 func pageHandler(w http.ResponseWriter, r *http.Request) {
-    url, _ := http.ParseRequestURL(r.URL.String())
+    url, _ := url.Parse(r.URL.String())
     body, err := getFile(url.Path)
 
     if err != nil {
@@ -37,9 +37,10 @@ func pageHandler(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintf(w, "%s", string(body))
 }
 
-func getFile(urlPath string) ([]byte, os.Error) {
+func getFile(urlPath string) ([]byte, error) {
     rePath := regexp.MustCompile("/(|index|index.html)$")
-    trimmedPath := rePath.ReplaceAllString(urlPath, "")
+    reTrailingHtml := regexp.MustCompile(".html$")
+    trimmedPath := reTrailingHtml.ReplaceAllString(rePath.ReplaceAllString(urlPath, ""), "")
     deployPath, _ := filepath.Abs("deploy/")
     
     body, err := ioutil.ReadFile(fmt.Sprintf("%s%s.html", deployPath, trimmedPath))
